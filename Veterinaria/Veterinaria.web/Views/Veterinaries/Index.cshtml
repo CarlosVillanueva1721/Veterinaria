@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Veterinaria.web.Models.Veterinary>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p style="margin-top: 100px">
+    <a href="@Url.Action("Create","veterinaries")" class="btn btn-success btn-sm">
+        <span class="icon text-white-50"> <i></i> </span>
+        <span class="text">Nueva Veterinario</span>
+    </a>
+</p>
+<table class="table table-sm" id="myProducts">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+$(document).ready(function () {
+            $('#myProducts').DataTable();
+        });</script>
+}
