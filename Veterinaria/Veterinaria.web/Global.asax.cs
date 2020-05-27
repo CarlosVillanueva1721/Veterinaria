@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Veterinaria.web.Clase;
 
 namespace Veterinaria.web
 {
@@ -15,7 +16,17 @@ namespace Veterinaria.web
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            this.CheckRoles();
+            Utilities.CheckSuperUser();
+            Utilities.CheckClientDefault();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        private void CheckRoles()
+        {
+            Utilities.CheckRoles("Admin");
+            Utilities.CheckRoles("Owner");
+            Utilities.CheckRoles("Veterinary");
         }
     }
 }
