@@ -193,6 +193,14 @@
     <Compile Include="Migrations\202005240005291_MODELOSNUEVOS.Designer.cs">
       <DependentUpon>202005240005291_MODELOSNUEVOS.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005301821429_imagen.cs" />
+    <Compile Include="Migrations\202005301821429_imagen.Designer.cs">
+      <DependentUpon>202005301821429_imagen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005301847320_imagen2.cs" />
+    <Compile Include="Migrations\202005301847320_imagen2.Designer.cs">
+      <DependentUpon>202005301847320_imagen2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Consult.cs" />
@@ -414,6 +422,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005240005291_MODELOSNUEVOS.resx">
       <DependentUpon>202005240005291_MODELOSNUEVOS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005301821429_imagen.resx">
+      <DependentUpon>202005301821429_imagen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005301847320_imagen2.resx">
+      <DependentUpon>202005301847320_imagen2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

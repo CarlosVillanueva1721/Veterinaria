@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Veterinaria.web.Models;
 
@@ -48,6 +52,26 @@ namespace Veterinaria.web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,PetType,Age,BirthDate,Color,Race,Weight,Height,ImgUrl")] Pet pet)
         {
+
+            HttpPostedFileBase FileBase = Request.Files[0];
+
+            if (FileBase.ContentLength == 0)
+            {
+                ModelState.AddModelError("Imagen", "Es necesario seleccionar una imagen");
+            }
+
+            else
+            {
+                if (FileBase.FileName.EndsWith(".jpg"))
+                {
+                    WebImage imagen = new WebImage(FileBase.InputStream);
+                    pet.ImgUrl = imagen.GetBytes();
+                }
+                else
+                {
+                    ModelState.AddModelError("imagen", "El sistema unicamente acepta imagenes con formato jpg");
+                }
+            }
             if (ModelState.IsValid)
             {
                 db.Pets.Add(pet);
@@ -80,8 +104,32 @@ namespace Veterinaria.web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,PetType,Age,BirthDate,Color,Race,Weight,Height,ImgUrl")] Pet pet)
         {
+
+            Pet _pet = new Pet();
+
+            HttpPostedFileBase FileBase = Request.Files[0];
+
+            if (FileBase.ContentLength == 0)
+            {
+                _pet = db.Pets.Find(pet.Id);
+                pet.ImgUrl = _pet.ImgUrl;
+            }
+            else
+            {
+                if (FileBase.FileName.EndsWith(".jpg"))
+                {
+                    WebImage image1 = new WebImage(FileBase.InputStream);
+                    pet.ImgUrl = image1.GetBytes();
+                }
+                else
+                {
+                    ModelState.AddModelError("imagen", "El sistema unicamente acepta imagenes con formato jpg");
+                }
+            }
             if (ModelState.IsValid)
             {
+                db.Entry(_pet).State = EntityState.Detached;
+                db.Entry(pet).State = EntityState.Detached;
                 db.Entry(pet).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -122,6 +170,18 @@ namespace Veterinaria.web.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult GetImagen(int id)
+        {
+            Pet peti = db.Pets.Find(id);
+            byte[] byteImage = peti.ImgUrl;
+            MemoryStream memoryStream = new MemoryStream(byteImage);
+            Image image = Image.FromStream(memoryStream);
+            memoryStream = new MemoryStream();
+            image.Save(memoryStream, ImageFormat.Jpeg);
+            memoryStream.Position = 0;
+
+            return File(memoryStream, "image/jpg");
         }
     }
 }

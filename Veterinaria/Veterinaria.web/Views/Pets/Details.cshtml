@@ -4,12 +4,11 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+
 
 <div>
-    <h4>Pet</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal col-md-8" style="margin-left:50px;">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -77,14 +76,13 @@
         <dt>
             @Html.DisplayNameFor(model => model.ImgUrl)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.ImgUrl)
+            <img src="@Url.Action("getimagen", "Pets", new{ id=Model.Id})" alt="aqui debe ir una imagen chida">
         </dd>
-
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+<p style="margin-left:50px;">
+    <a href="@Url.Action("Index","Pets")" class="btn btn-danger btn-circle"> <i class="fas fa-long-arrow-alt-left"></i></a>
+    <a href="@Url.Action("Edit", "Pets", new { id = Model.Id })" class="btn btn-warning btn-circle"> <i class="fas fa-edit"></i></a>
+
 </p>
